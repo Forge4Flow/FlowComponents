@@ -1,0 +1,149 @@
+{
+  "pins" : [
+    {
+      "identity" : "bigint",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/attaswift/BigInt.git",
+      "state" : {
+        "revision" : "0ed110f7555c34ff468e72e1686e59721f2b0da6",
+        "version" : "5.3.0"
+      }
+    },
+    {
+      "identity" : "dynamiccolor",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yannickl/DynamicColor",
+      "state" : {
+        "revision" : "d9beca13ca85baa50ee29832d0db5129fba69630",
+        "version" : "5.0.1"
+      }
+    },
+    {
+      "identity" : "fcl-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/outblock/fcl-swift.git",
+      "state" : {
+        "revision" : "c3d81cd339196988e7bd670b4c359c041a81f24d",
+        "version" : "0.1.2"
+      }
+    },
+    {
+      "identity" : "finejson",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/omochi/FineJSON",
+      "state" : {
+        "revision" : "05101709243cb66d80c92e645210a3b80cf4e17f",
+        "version" : "1.14.0"
+      }
+    },
+    {
+      "identity" : "flow-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/outblock/flow-swift.git",
+      "state" : {
+        "revision" : "e1721bea71d8a27e209398f5a740ef02f6c6c920",
+        "version" : "0.3.1"
+      }
+    },
+    {
+      "identity" : "gzipswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/1024jp/GzipSwift",
+      "state" : {
+        "revision" : "7a7f17761c76a932662ab77028a4329f67d645a4",
+        "version" : "5.2.0"
+      }
+    },
+    {
+      "identity" : "onigmo-swift-build",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/maoyama/Onigmo-swift-build",
+      "state" : {
+        "revision" : "d0dd20ecbad3aa0de7083c3e522ef722ed738b8a",
+        "version" : "1.2.0"
+      }
+    },
+    {
+      "identity" : "qrcode",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/WalletConnect/QRCode",
+      "state" : {
+        "revision" : "263f280d2c8144adfb0b6676109846cfc8dd552b",
+        "version" : "14.3.1"
+      }
+    },
+    {
+      "identity" : "richjsonparser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/omochi/RichJSONParser.git",
+      "state" : {
+        "revision" : "263e2ecfe88d0500fa99e4cbc8c948529d335534",
+        "version" : "3.0.0"
+      }
+    },
+    {
+      "identity" : "starscream",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/daltoniam/Starscream",
+      "state" : {
+        "revision" : "e6b65c6d9077ea48b4a7bdda8994a1d3c6969c8d",
+        "version" : "3.1.1"
+      }
+    },
+    {
+      "identity" : "swift-nio-zlib-support",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-nio-zlib-support.git",
+      "state" : {
+        "revision" : "37760e9a52030bb9011972c5213c3350fa9d41fd",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "swift-qrcode-generator",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dagronf/swift-qrcode-generator",
+      "state" : {
+        "revision" : "5ca09b6a2ad190f94aa3d6ddef45b187f8c0343b",
+        "version" : "1.0.3"
+      }
+    },
+    {
+      "identity" : "swiftimagereadwrite",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dagronf/SwiftImageReadWrite",
+      "state" : {
+        "revision" : "5596407d1cf61b953b8e658fa8636a471df3c509",
+        "version" : "1.1.6"
+      }
+    },
+    {
+      "identity" : "syntaxhighlight",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/maoyama/SyntaxHighlight.git",
+      "state" : {
+        "revision" : "dc20df1f3a2189e301e90daedfadd16b9be070db",
+        "version" : "0.2.0"
+      }
+    },
+    {
+      "identity" : "tmsyntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/maoyama/TMSyntax",
+      "state" : {
+        "revision" : "47fa35533c126d0b068004d5b67277c1ffcfb903",
+        "version" : "0.1.0"
+      }
+    },
+    {
+      "identity" : "walletconnectswiftv2",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/WalletConnect/WalletConnectSwiftV2",
+      "state" : {
+        "revision" : "84b09a13b48d08f1092a7494e2ad70cbb92545c2",
+        "version" : "1.6.11"
+      }
+    }
+  ],
+  "version" : 2
+}
