@@ -118,15 +118,6 @@
       }
     },
     {
-      "identity" : "syntaxhighlight",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/maoyama/SyntaxHighlight.git",
-      "state" : {
-        "revision" : "dc20df1f3a2189e301e90daedfadd16b9be070db",
-        "version" : "0.2.0"
-      }
-    },
-    {
       "identity" : "tmsyntax",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/maoyama/TMSyntax",

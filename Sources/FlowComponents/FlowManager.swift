@@ -9,24 +9,35 @@ import FCL
 import Flow
 import SwiftUI
 import UIKit
+import SyntaxHighlight
 
 public let flowManager = FlowManager.shared
 
 public struct ThemeConfig {
-    public var primaryColor: Color
-    public var secondaryColor: Color
-    public var tertiaryColory: Color
+    public var primaryColor: SwiftUI.Color
+    public var secondaryColor: SwiftUI.Color
+    public var tertiaryColory: SwiftUI.Color
+    public var textMateTheme: Themes
     
-    public init(primaryColor: Color, secondaryColor: Color, tertiaryColory: Color) {
+    public init() {
+        self.init(primaryColor: Color.green, secondaryColor: Color.purple, tertiaryColory: Color.pink)
+    }
+    
+    public init(primaryColor: SwiftUI.Color, secondaryColor: SwiftUI.Color, tertiaryColory: SwiftUI.Color) {
+        self.init(primaryColor: primaryColor, secondaryColor: secondaryColor, tertiaryColory: tertiaryColory, tmTheme: .solarizedDark)
+    }
+    
+    public init(primaryColor: SwiftUI.Color, secondaryColor: SwiftUI.Color, tertiaryColory: SwiftUI.Color, tmTheme: Themes) {
         self.primaryColor = primaryColor
         self.secondaryColor = secondaryColor
         self.tertiaryColory = tertiaryColory
+        self.textMateTheme = tmTheme
     }
 }
 
 public class FlowManager: ObservableObject {
     public static let shared = FlowManager()
-    public var themeConfig = ThemeConfig(primaryColor: Color.green, secondaryColor: Color.purple, tertiaryColory: Color.pink)
+    public var themeConfig = ThemeConfig()
     
     @Published public var pendingTxStatus = Flow.Transaction.Status.unknown
 

@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "FlowComponents",
     platforms: [
-        .iOS(.v15),
+        .iOS(.v16),
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -16,7 +16,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/outblock/fcl-swift.git", from: "0.1.2"),
-        .package(url: "https://github.com/maoyama/SyntaxHighlight.git", from: "0.2.0")
+        .package(url: "https://github.com/Forge4Flow/SyntaxHighlight.git", from: "0.3.1")
+//        .package(path: "/Users/boiseitguru/Development/Forge4Flow/ecosystem_sdks/upstream_packages/SyntaxHighlight")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -27,10 +28,7 @@ let package = Package(
                 .product(name: "FCL", package: "fcl-swift"),
                 .product(name: "SyntaxHighlight", package: "SyntaxHighlight"),
             ],
-            path: "Sources",
-            resources: [
-                .process("Resources/cadence.tmGrammar.json")
-            ]
+            path: "Sources"
         ),
         .testTarget(
             name: "FlowComponentsTests",
