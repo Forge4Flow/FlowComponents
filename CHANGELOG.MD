@@ -9,15 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added Additional language support to the syntax highlighting system
-- Create a CadenceCode protocol to assist with initializing syntax highlighting
-- Added the ability for the Transaction View to automatically appear in any app the package has been added to when a transaction is "subscribed" to within the flowManager.
+- Created a CadenceCode protocol to assist with initializing `CodeBlock`
+- Added the ability for the `TransactionView` to automatically appear in any app the package has been added to when a transaction is "subscribed" to within the `flowManager`.
 - Added `.responsiveApp` view modifer to assist with building responsive views
 - Created `ResponsiveView` an opinionated responsive app structure for basic DApps.
 
 ### Changed
 
-N/A
+- Updated README
 
 ### Deprecated
 

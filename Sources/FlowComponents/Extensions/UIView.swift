@@ -1,8 +1,8 @@
 //
-//  File.swift
+//  UIView.swift
+//  Borrowed from Flow Reference Wallet
 //
-//
-//  Created by Hao Fu on 29/11/2022.
+//  Orginal code by Hao Fu on 29/11/2022.
 //
 
 import Foundation

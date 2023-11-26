@@ -37,13 +37,6 @@ public struct ResponsiveApp: ViewModifier {
                 .environment(properties)
         }
     }
-    
-    // MARK: Simple Way to Find if the app is in Split View
-    func isSplit() -> Bool {
-        guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return false }
-
-        return screen.windows.first?.frame.size != screen.screen.bounds.size
-    }
 }
 
 public extension View {
