@@ -118,6 +118,15 @@
       }
     },
     {
+      "identity" : "syntaxhighlight",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Forge4Flow/SyntaxHighlight.git",
+      "state" : {
+        "revision" : "28d3c25294ee8095facc846a9b515fc2f64693fc",
+        "version" : "0.3.1"
+      }
+    },
+    {
       "identity" : "tmsyntax",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/maoyama/TMSyntax",
