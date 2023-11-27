@@ -10,11 +10,19 @@ import SwiftUI
 import Flow
 
 public struct TransactionView: View {
+    @Environment(\.presentationMode)
+    var presentationMode
+    
     public init() {}
     
     public var body: some View {
         ProgressView()
             .progressViewStyle(LargeFlowTransactionView())
+            .onReceive(flowManager.$pendingTx) { tx in
+                if tx == nil {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
     }
 }
 

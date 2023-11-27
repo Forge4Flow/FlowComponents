@@ -48,30 +48,42 @@ public class FlowManager: ObservableObject {
     public func subscribeTransaction(txId: Flow.ID) {
         Task {
             do {
-                DispatchQueue.main.async {
-                    self.pendingTx = txId.hex
-                }
                 let tx = try await txId.onceSealed()
                 await UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 print(tx)
                 DispatchQueue.main.async {
-                    if (tx.errorMessage != "") {
-                        self.txError = tx.errorMessage
+                    flowManager.closeTransactionIfNeed {
+                        if (tx.errorMessage != "") {
+                            self.txError = tx.errorMessage
+                        }
                     }
-                    
-                    self.pendingTx = nil
                 }
             } catch {
                 DispatchQueue.main.async {
-                    self.pendingTx = nil
-                    self.txError = error.localizedDescription
+                    flowManager.closeTransactionIfNeed {
+                        self.txError = error.localizedDescription
+                    }
                 }
             }
+        }
+        
+        DispatchQueue.main.async {
+            let discoveryVC = UIHostingController(rootView: TransactionView())
+            discoveryVC.view.backgroundColor = .clear
+            discoveryVC.modalPresentationStyle = .overFullScreen
+            UIApplication.shared.topMostViewController?.present(discoveryVC, animated: true)
         }
     }
 
     public func subscribeTransaction(txId: String) {
         let id = Flow.ID(hex: txId)
         self.subscribeTransaction(txId: id)
+    }
+    
+    public func closeTransactionIfNeed(completion: (() -> Void)? = nil) {
+        guard let vc = UIApplication.shared.topMostViewController as? UIHostingController<TransactionView> else {
+            return
+        }
+        vc.dismiss(animated: true, completion: completion)
     }
 }

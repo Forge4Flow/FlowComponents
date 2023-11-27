@@ -14,6 +14,10 @@ public struct CodeBlock: View {
     @State private var grammar: GrammarTypes
     @State private var theme: Themes
     
+    public init(cadenceCode: CadenceCode) {
+        self.init(title: cadenceCode.fileName, code: cadenceCode.code, grammar: .cadence)
+    }
+    
     public init(code: String, grammar: GrammarTypes) {
         self.init(title: grammar.name, code: code, grammer: grammar, theme: flowManager.themeConfig.textMateTheme)
     }
@@ -40,5 +44,13 @@ public struct CodeBlock: View {
             Text(title)
         }
 
+    }
+}
+
+public extension CodeBlock {
+    func tmTheme(_ theme: Themes) -> some View {
+        self.theme = theme
+        
+        return self
     }
 }
