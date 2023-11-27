@@ -65,39 +65,204 @@ To add `FlowComponents` to your Xcode project:
 
 ### Themeing
 
-> More details to come...
+> More details to come, with better theme support being developed.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+The components all currently support a basic global theme with the below configuration options:
 
-<!-- USAGE EXAMPLES -->
+```swift
+public var primaryColor: SwiftUI.Color
+public var secondaryColor: SwiftUI.Color
+public var tertiaryColory: SwiftUI.Color
+public var textMateTheme: Themes
+```
 
-<!-- ## Usage
+Updating the theme colors is as simple as providing a new `ThemeConfig` to the `flowManager`
+
+```swift
+flowManager.themeConfig = ThemeConfig(primaryColor: Color.eaPrimary, secondaryColor: Color.eaSecondary, tertiaryColory: Color.eaTertiary)
+```
 
 ### Components / Views
 
 #### `ButtonView`
 
+A standard SwiftUI button with common view modifiers applied to create a traditional looking button.
+
+```swift
+ButtonView(title: "Connect Wallet") {
+    fcl.openDiscovery()
+}
+
+or
+
+ButtonView {
+    Image(systemName: "rectangle.portrait.and.arrow.forward")
+        .foregroundStyle(Color.black)
+        .padding(10)
+} action: {
+    Task {
+        try await fcl.unauthenticate()
+    }
+}
+.frame(maxWidth: 20)
+```
+
+<div align="center">
+  <img src="repo_images/standard-button.png" alt="Logo">
+  <img src="repo_images/button-image.png" alt="Logo">
+</div>
+
 #### `CodeBlock`
+
+A customizable code block with TextMate syntax highlighting support
+
+```swift
+CodeBlock(code: <String>, grammar: <GrammarTypes>, theme: <Themes>)
+```
+
+<div align="center">
+  <img src="repo_images/codeblock.png" alt="Logo">
+</div>
+
+##### `CadenceCode`
+
+`CadenceCode` is a helper protocal for defining reusable sets of cadence code. You can use this within the `CodeBlock` or FCL when running scripts/transactions
+
+For example you can create a enum that confirms to `CadenceCode` allowing for type safe re-using of your cadence code throughout the application.
+
+```swift
+import Foundation
+import FlowComponents
+
+enum Transactions: CadenceCode {
+    case setupVault
+    case transfer
+
+    var fileName: String {
+        switch self {
+        case .setupVault:
+            return "setup_vault.cdc"
+        case .transfer:
+            return "transfer.cdc"
+        }
+    }
+
+    var code: String {
+        switch self {
+        case .setupVault:
+            return """
+            // This transaction is a template for a transaction
+            // to add a Vault resource to their account
+            // so that they can use the exampleToken
+            import ExampleToken from 0xDeployer
+            import FungibleToken from 0xStandard
+
+            transaction() {
+
+                prepare(signer: AuthAccount) {
+                    /*
+                        NOTE: In any normal DApp, you would NOT DO these next 3 lines. You would never want to destroy
+                        someone's vault if it's already set up. The only reason we do this for the
+                        tutorial is because there's a chance that, on testnet, someone already has
+                        a vault here and it will mess with the tutorial.
+                    */
+                    destroy signer.load<@FungibleToken.Vault>(from: ExampleToken.VaultStoragePath)
+                    signer.unlink(ExampleToken.VaultReceiverPath)
+                    signer.unlink(ExampleToken.VaultBalancePath)
+
+                    // These next lines are the only ones you would normally do.
+                    if signer.borrow<&ExampleToken.Vault>(from: ExampleToken.VaultStoragePath) == nil {
+                        // Create a new ExampleToken Vault and put it in storage
+                        signer.save(<-ExampleToken.createEmptyVault(), to: ExampleToken.VaultStoragePath)
+
+                        // Create a public capability to the Vault that only exposes
+                        // the deposit function through the Receiver interface
+                        signer.link<&ExampleToken.Vault{FungibleToken.Receiver}>(ExampleToken.VaultReceiverPath, target: ExampleToken.VaultStoragePath)
+
+                        // Create a public capability to the Vault that only exposes
+                        // the balance field through the Balance interface
+                        signer.link<&ExampleToken.Vault{FungibleToken.Balance}>(ExampleToken.VaultBalancePath, target: ExampleToken.VaultStoragePath)
+                    }
+                }
+            }
+            """
+        case .transfer:
+            return """
+            import ExampleToken from 0xDeployer
+            import FungibleToken from 0xStandard
+
+            transaction(recipient: Address, amount: UFix64) {
+                let SenderVault: &ExampleToken.Vault
+                let ReceiverVault: &ExampleToken.Vault{FungibleToken.Receiver}
+
+                prepare(signer: AuthAccount) {
+                    // Get a reference to the signer's stored vault
+                    self.SenderVault = signer.borrow<&ExampleToken.Vault>(from: ExampleToken.VaultStoragePath)
+                        ?? panic("Could not borrow reference to the owner's Vault!")
+
+                    self.ReceiverVault = getAccount(recipient).getCapability(ExampleToken.VaultReceiverPath)
+                                            .borrow<&ExampleToken.Vault{FungibleToken.Receiver}>()
+                                            ?? panic("The recipient does not have an ExampleToken Vault set up.")
+                }
+
+                execute {
+                    let vault: @FungibleToken.Vault <- self.SenderVault.withdraw(amount: amount)
+                    // Deposit the withdrawn tokens in the recipient's receiver
+                    self.ReceiverVault.deposit(from: <- vault)
+                }
+            }
+            """
+        }
+    }
+}
+
+// You can then use the code with FCL or within a `CodeBlock`
+try await fcl.mutate(cadence: Transactions.setupVault.code)
+
+CodeBlock(cadenceCode: Transactions.setupVault)
+```
+
+#### `IPFSImage`
+
+a Cached AsyncImage view for images stored on IPFS. Currently supports pulling images from <https://nftstorage.link>, with additional providers coming in the future.
+
+```swift
+IPFSImage(cid: nft.thumbnail["url"] ?? "")
+    .frame(width: 300)
+```
 
 #### `TransactionView`
 
+A popup view for showing transaction status, simply pass the transaction ID to `flowManager.subscribeTransaction` as shown, the view will automatically pop up on the screen, track the transaction status and disappear upon completion. If the transaction fails the detail will be passed to `ErrorView` below.
+
+```swift
+do {
+    let id = try await fcl.mutate(cadence: Transactions.setupVault.code)
+
+    flowManager.subscribeTransaction(txId: id)
+} catch {
+    print(error)
+}
+```
+
+<div align="center">
+  <img src="repo_images/transaction-dark.png" alt="Logo">
+  <img src="repo_images/transaction-light.png" alt="Logo">
+</div>
+
 #### `ErrorView`
+
+> More details to come
 
 ### Responsive DApp Helper
 
-#### `AppProperties`
+> More details to come
 
-### Responsive DApp Builder
+<!-- #### `AppProperties` -->
 
-#### `ResponsiveView`
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-##### `HeaderView`
-
-##### `SidebarView`
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
+<!-- USAGE EXAMPLES -->
 
 <!-- ROADMAP -->
 
@@ -115,16 +280,16 @@ See the [open issues](https://github.com/Forge4Flow/FlowComponents/issues) for a
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+The open source community thrives on contributions, and yours can make a real difference. If you're eager to share your ideas or enhancements, our Discord server is the place to be. Here's how you can contribute:
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+1. [Join our Discord](https://discord.gg/z7GCDeVhYG) server for discussions and support.
+2. Fork the Project on GitHub.
+3. Create your Feature Branch (`git checkout -b feature/YourAmazingFeature`).
+4. Commit your Changes (`git commit -m 'Add YourAmazingFeature'`).
+5. Push to the Branch (`git push origin feature/YourAmazingFeature`).
+6. Open a Pull Request and discuss it with us on Discord.
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+We value each contribution and encourage you to connect with us on Discord to brainstorm and collaborate. Don't forget to star the project on GitHub!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -132,7 +297,7 @@ Don't forget to give the project a star! Thanks again!
 
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the MIT License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -140,9 +305,13 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 
-BoiseITGuru - [@boiseitguru](https://twitter.com/boiseitguru) - boiseitguru@forge4flow.com
+Connect with us directly on our Discord server for any queries or collaborations. You can also reach out to BoiseITGuru on Twitter or via email, but for faster responses and a more interactive experience, our Discord community is the best place to be.
 
-Project Link: [https://github.com/Forge4Flow/FlowComponents](https://github.com/Forge4Flow/FlowComponents)
+- Join our Discord: [Discord Server Invite Link](https://discord.gg/z7GCDeVhYG)
+- BoiseITGuru Twitter: [@boiseitguru](https://twitter.com/boiseitguru)
+- Email: boiseitguru@forge4flow.com
+
+For more about Forge4Flow, visit [https://docs.forge4flow.com](https://docs.forge4flow.com).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -150,9 +319,15 @@ Project Link: [https://github.com/Forge4Flow/FlowComponents](https://github.com/
 
 ## Acknowledgments
 
-- []()
-- []()
-- []()
+Our library owes its existence to several key influences and resources in the open source community:
+
+- **Inspiration from Emerald City DAO**: The initial inspiration for our library comes from the [Emerald City DAO: Svelte Components Library](https://github.com/EmeraldCityDAO/svelte-components).
+- **Utilized Open Source Libraries**: We built our components on top of various open source libraries. These include:
+  - [SyntaxHighlight](https://github.com/Forge4Flow/SyntaxHighlight.git)
+  - [SwiftUI Cached Async Image](https://github.com/lorenzofiamingo/swiftui-cached-async-image)
+  - [FCL-Swift](https://github.com/outblock/fcl-swift)
+
+This section is an opportunity to show gratitude to those who have indirectly helped shape this project. We invite you to explore these resources and acknowledge their contributions to the open source community.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

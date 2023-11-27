@@ -16,8 +16,9 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/outblock/fcl-swift.git", from: "0.1.2"),
-        .package(url: "https://github.com/Forge4Flow/SyntaxHighlight.git", from: "0.3.1")
+        .package(url: "https://github.com/Forge4Flow/SyntaxHighlight.git", from: "0.3.1"),
 //        .package(path: "/Users/boiseitguru/Development/Forge4Flow/ecosystem_sdks/upstream_packages/SyntaxHighlight")
+        .package(url: "https://github.com/lorenzofiamingo/swiftui-cached-async-image", from: "2.1.1")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
