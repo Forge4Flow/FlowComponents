@@ -12,7 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Created a CadenceCode protocol to assist with initializing `CodeBlock`
 - Added the ability for the `TransactionView` to automatically appear in any app the package has been added to when a transaction is "subscribed" to within the `flowManager`.
 - Added `.responsiveApp` view modifer to assist with building responsive views
-- Created `ResponsiveView` an opinionated responsive app structure for basic DApps.
 
 ### Changed
 

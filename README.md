@@ -33,93 +33,45 @@
   <img src="repo_images/logo.png" alt="Logo">
 </a>
 
+<br />
+
 <p align="center">
-  project_description
+  Reusable SwiftUI views, modifiers, and extensions for creating DApps on the Flow Blockchain.
+  <!-- <br />
+  <a href="https://github.com/Forge4Flow/FlowComponents"><strong>Explore the docs »</strong></a> -->
   <br />
-  <a href="https://github.com/Forge4Flow/FlowComponents"><strong>Explore the docs »</strong></a>
   <br />
-  <br />
-  <a href="https://github.com/Forge4Flow/FlowComponents">View Demo</a>
-  ·
+  <!-- <a href="https://github.com/Forge4Flow/FlowComponents">View Demo</a>
+  · -->
   <a href="https://github.com/Forge4Flow/FlowComponents/issues">Report Bug</a>
   ·
   <a href="https://github.com/Forge4Flow/FlowComponents/issues">Request Feature</a>
 </p>
 </div>
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
-<!-- ABOUT THE PROJECT -->
-
-## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `Forge4Flow`, `FlowComponents`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `FlowComponents`, `project_description`
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- GETTING STARTED -->
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/Forge4Flow/FlowComponents.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = "ENTER YOUR API";
-   ```
+To add `FlowComponents` to your Xcode project:
+
+1. Open your Xcode project.
+2. Navigate to `File` -> `Swift Packages` -> `Add Package Dependency...`.
+3. Enter the repository URL: `https://github.com/Forge4Flow/FlowComponents.git`.
+4. Choose the version you want to use.
+5. Add the package to your desired targets.
+
+### Themeing
+
+> More details to come...
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
 
-## Usage
+<!-- ## Usage
 
 ### Components / Views
 
@@ -130,8 +82,6 @@ This is an example of how to list things you need to use the software and how to
 #### `TransactionView`
 
 #### `ErrorView`
-
-### Themeing
 
 ### Responsive DApp Helper
 
@@ -147,16 +97,15 @@ This is an example of how to list things you need to use the software and how to
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 <!-- ROADMAP -->
 
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-  - [ ] Nested Feature
+- [ ] README Updates/Documentation
+- [ ] Better Themeing Capabilities
+- [ ] Additional Components
 
 See the [open issues](https://github.com/Forge4Flow/FlowComponents/issues) for a full list of proposed features (and known issues).
 
@@ -191,7 +140,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+BoiseITGuru - [@boiseitguru](https://twitter.com/boiseitguru) - boiseitguru@forge4flow.com
 
 Project Link: [https://github.com/Forge4Flow/FlowComponents](https://github.com/Forge4Flow/FlowComponents)
 
@@ -220,4 +169,3 @@ Project Link: [https://github.com/Forge4Flow/FlowComponents](https://github.com/
 [issues-url]: https://github.com/Forge4Flow/FlowComponents/issues
 [license-shield]: https://img.shields.io/github/license/Forge4Flow/FlowComponents.svg?style=for-the-badge
 [license-url]: https://github.com/Forge4Flow/FlowComponents/blob/main/LICENSE
-[product-screenshot]: images/screenshot.png
