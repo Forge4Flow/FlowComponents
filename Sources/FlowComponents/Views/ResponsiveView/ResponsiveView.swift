@@ -20,10 +20,14 @@ public struct ResponsiveView<Content: View>: View {
         GeometryReader { proxy in
             let size = proxy.size
             let isLandscape = size.width > size.height
+            #if os(macOS)
+            let isiPad = false
+            #else
             let isiPad = UIDevice.current.userInterfaceIdiom == .pad
+            #endif
             let isMaxSplit = isSplit() && size.width < 400
             let properties = AppProperties(isLandscape: isLandscape, isiPad: isiPad, isSplit: isSplit(), isMaxSplit: isMaxSplit, size: size)
-            
+
             Group {
                 VStack {
                     mainView
