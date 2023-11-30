@@ -8,10 +8,14 @@
 import SwiftUI
 import CachedAsyncImage
 
-struct IPFSImage: View {
-    @State var cid: String
+public struct IPFSImage: View {
+    @State private var cid: String
     
-    var body: some View {
+    public init(cid: String) {
+        self.cid = cid
+    }
+    
+    public var body: some View {
         CachedAsyncImage(url: URL(string: "https://nftstorage.link/ipfs/\(cid)")) { phase in
             if let image = phase.image {
                 image
