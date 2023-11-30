@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import ecDAO
-import FlowComponents
 
 struct ErrorView: View {
     @State var error: String
