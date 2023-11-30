@@ -28,6 +28,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FCL", package: "fcl-swift"),
                 .product(name: "SyntaxHighlight", package: "SyntaxHighlight"),
+                .product(name: "CachedAsyncImage", package: "swiftui-cached-async-image"),
             ],
             path: "Sources"
         ),
