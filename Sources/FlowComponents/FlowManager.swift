@@ -52,17 +52,14 @@ public class FlowManager: ObservableObject {
                 await UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 print(tx)
                 DispatchQueue.main.async {
-                    flowManager.closeTransactionIfNeed {
-                        if (tx.errorMessage != "") {
-                            self.txError = tx.errorMessage
-                        }
+                    if (tx.errorMessage != "") {
+                        print("did start")
+                        self.showErrorView(error: tx.errorMessage)
                     }
                 }
             } catch {
                 DispatchQueue.main.async {
-                    flowManager.closeTransactionIfNeed {
-                        self.txError = error.localizedDescription
-                    }
+                    self.showErrorView(error: error.localizedDescription)
                 }
             }
         }
@@ -82,6 +79,26 @@ public class FlowManager: ObservableObject {
     
     public func closeTransactionIfNeed(completion: (() -> Void)? = nil) {
         guard let vc = UIApplication.shared.topMostViewController as? UIHostingController<TransactionView> else {
+            completion?()
+            return
+        }
+        vc.dismiss(animated: true, completion: completion)
+    }
+    
+    public func showErrorView(error: String) {
+        print("did call")
+        self.closeTransactionIfNeed {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                let errorVC = UIHostingController(rootView: ErrorWrapper(error: error))
+                errorVC.view.backgroundColor = .clear
+                errorVC.modalPresentationStyle = .overFullScreen
+                UIApplication.shared.topMostViewController?.present(errorVC, animated: true)
+            }
+        }
+    }
+    
+    public func closeErrorIfNeed(completion: (() -> Void)? = nil) {
+        guard let vc = UIApplication.shared.topMostViewController as? UIHostingController<ErrorWrapper> else {
             return
         }
         vc.dismiss(animated: true, completion: completion)
