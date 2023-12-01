@@ -22,7 +22,16 @@ public struct IPFSImage: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             } else if phase.error != nil {
-                Image(systemName: "exclamationmark.triangle.fill")
+                VStack {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .resizable()
+                        .foregroundStyle(flowManager.themeConfig.secondaryColor, flowManager.themeConfig.primaryColor)
+                        .aspectRatio(contentMode: .fit)
+                    
+                    Text("IPFS Error")
+                        .font(.title3)
+                }
+                    .padding()
             } else {
                 ProgressView()
                     .progressViewStyle(.circular)
