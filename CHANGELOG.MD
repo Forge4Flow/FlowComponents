@@ -9,14 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Created a CadenceCode protocol to assist with initializing `CodeBlock`
-- Added the ability for the `TransactionView` to automatically appear in any app the package has been added to when a transaction is "subscribed" to within the `flowManager`.
-- Added `.responsiveApp` view modifer to assist with building responsive views
-- Added `IPFSImage` view
+N/A
 
 ### Changed
 
-- Updated README
+N/A
 
 ### Deprecated
 
@@ -33,6 +30,60 @@ N/A
 ### Security
 
 N/A
+
+## [v0.3.0] - 12/3/2023
+
+### Added
+
+- `FlowApp` View
+
+### Changed
+
+- Migrated FlowManger to @Observable macro
+- Migrated AppProperties to @Observable macro
+- Migrated ThemeConfig to @Observable macro
+
+### Removed
+
+- Removed `ResponiveView`
+- Removed `ResponsiveApp`
+
+## [v0.2.4]
+
+### Fixed
+
+- Fixed Error View Launching
+
+## [v0.2.3]
+
+### Fixed
+
+- IPFSImage View
+
+## [v0.2.2]
+
+### Fixed
+
+- Dependency Imports
+
+## [v0.2.1]
+
+### Fixed
+
+- Dependency Imports
+
+## [v0.2.0] - 11/31/2023
+
+### Added
+
+- Created a CadenceCode protocol to assist with initializing `CodeBlock`
+- Added the ability for the `TransactionView` to automatically appear in any app the package has been added to when a transaction is "subscribed" to within the `flowManager`.
+- Added `.responsiveApp` view modifer to assist with building responsive views
+- Added `IPFSImage` view
+
+### Changed
+
+- Updated README
 
 ## [v0.1.0] - 11/21/2023
 
