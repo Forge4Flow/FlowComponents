@@ -13,7 +13,7 @@ N/A
 
 ### Changed
 
-N/A
+- README Updates
 
 ### Deprecated
 
@@ -36,6 +36,7 @@ N/A
 ### Added
 
 - `FlowApp` View
+- `FlowManager.mutate` Convienience Function
 
 ### Changed
 

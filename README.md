@@ -1,25 +1,6 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
-
 <a name="readme-top"></a>
 
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
 <div align="center">
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
@@ -34,9 +15,10 @@
 </a>
 
 <br />
+<br />
 
 <p align="center">
-  Reusable SwiftUI views, modifiers, and extensions for creating DApps on the Flow Blockchain.
+  FlowComponents is an open-source SwiftUI library tailored to simplify the development of decentralized applications (DApps) on the Flow Blockchain. This comprehensive library comprises reusable SwiftUI views, modifiers, and extensions, offering an intuitive and feature-rich toolkit for crafting user interfaces specifically designed for Flow-based projects. With properties that facilitate responsive app development and seamless integration with the Flow ecosystem, such as the .find name integration, FlowComponents empowers developers to create robust and user-friendly decentralized applications.
   <!-- <br />
   <a href="https://github.com/Forge4Flow/FlowComponents"><strong>Explore the docs »</strong></a> -->
   <br />
@@ -63,7 +45,62 @@ To add `FlowComponents` to your Xcode project:
 4. Choose the version you want to use.
 5. Add the package to your desired targets.
 
-### Themeing
+### Initializing Environment
+
+To set up your FlowComponents-powered application, utilize the `FlowApp` wrapper, a streamlined configuration that not only initializes essential objects like `AppProperties` and `FlowManager` but also seamlessly injects `TransactionView` and `ErrorView` for monitoring transaction progress and displaying errors generated during transaction/script execution on the Flow blockchain.
+
+_Note: Future updates are planned to provide programmatic control over the injection of `TransactionView` and `ErrorView`, offering enhanced flexibility for handling transaction monitoring and errors in your DApp._
+
+```swift
+import SwiftUI
+... // Rest of Imports
+import FlowComponents
+
+@main
+struct Hello_WorldApp: App {
+    ... // App Init
+
+    var body: some Scene {
+        WindowGroup {
+            FlowApp {
+                ContentView()
+            }
+        }
+    }
+}
+
+```
+
+Inside your DApp's views, retrieve AppProperties and FlowManager directly from the SwiftUI environment.
+
+```swift
+import SwiftUI
+import FCL
+import FlowComponents
+
+struct DAppView: View {
+    @Environment(FlowManager.self) private var flowManager
+    @Environment(AppProperties.self) private var appProps
+
+    var body: some View {
+        VStack {
+            Text("My DApp")
+
+            if flowManager.isAuthenticated {
+                Text("Welcome \(fcl.currentUser!.address.hex)")
+            }
+
+            if appProps.isiPad && appProps.isLandscape {
+                Text("Responsive Text")
+            }
+        }
+    }
+}
+```
+
+Swift's new @Observable macro, introduced in iOS 17, iPadOS 17, macOS 14, tvOS 17, and watchOS 10, is leveraged for these objects. This modern approach to observation replaces traditional ObservableObject classes. For an in-depth understanding of this new feature, refer to [Apple's documentation on Observation](https://developer.apple.com/documentation/swiftui/migrating-from-the-observable-object-protocol-to-the-observable-macro).
+
+### Theming
 
 > More details to come, with better theme support being developed.
 
@@ -82,9 +119,15 @@ Updating the theme colors is as simple as providing a new `ThemeConfig` to the `
 flowManager.themeConfig = ThemeConfig(primaryColor: Color.eaPrimary, secondaryColor: Color.eaSecondary, tertiaryColory: Color.eaTertiary)
 ```
 
-### Components / Views
+## Convienience Functions
 
-#### `ButtonView`
+### `FlowManager.mutate`
+
+Convenience wrapper around `fcl.muate` that automatically passes the transaction to `FlowManager.subscribeTransaction` for Transaction and Error monitoring.
+
+## Components / Views
+
+### `ButtonView`
 
 A standard SwiftUI button with common view modifiers applied to create a traditional looking button.
 
@@ -112,7 +155,7 @@ ButtonView {
   <img src="repo_images/button-image.png" alt="Logo">
 </div>
 
-#### `CodeBlock`
+### `CodeBlock`
 
 A customizable code block with TextMate syntax highlighting support
 
@@ -124,7 +167,7 @@ CodeBlock(code: <String>, grammar: <GrammarTypes>, theme: <Themes>)
   <img src="repo_images/codeblock.png" alt="Logo">
 </div>
 
-##### `CadenceCode`
+#### `CadenceCode`
 
 `CadenceCode` is a helper protocal for defining reusable sets of cadence code. You can use this within the `CodeBlock` or FCL when running scripts/transactions
 
@@ -222,7 +265,7 @@ try await fcl.mutate(cadence: Transactions.setupVault.code)
 CodeBlock(cadenceCode: Transactions.setupVault)
 ```
 
-#### `IPFSImage`
+### `IPFSImage`
 
 a Cached AsyncImage view for images stored on IPFS. Currently supports pulling images from <https://nftstorage.link>, with additional providers coming in the future.
 
@@ -231,9 +274,9 @@ IPFSImage(cid: nft.thumbnail["url"] ?? "")
     .frame(width: 300)
 ```
 
-#### `TransactionView`
+### `TransactionView`
 
-A popup view for showing transaction status, simply pass the transaction ID to `flowManager.subscribeTransaction` as shown, the view will automatically pop up on the screen, track the transaction status and disappear upon completion. If the transaction fails the detail will be passed to `ErrorView` below.
+A popup view for showing transaction status, simply pass the transaction ID to `flowManager.subscribeTransaction` or call `FlowManager.mutate` directly as shown, the view will automatically pop up on the screen, track the transaction status and disappear upon completion. If the transaction fails the detail will be passed to `ErrorView` below.
 
 ```swift
 do {
@@ -243,6 +286,10 @@ do {
 } catch {
     print(error)
 }
+
+// or
+
+await flowManager.mutate(cadence: Transactions.changeGreeting.code, args: [.string(greetingText)])
 ```
 
 <div align="center">
@@ -250,26 +297,18 @@ do {
   <img src="repo_images/transaction-light.png" alt="Logo">
 </div>
 
-#### `ErrorView`
+### `ErrorView`
 
 > More details to come
-
-### Responsive DApp Helper
-
-> More details to come
-
-<!-- #### `AppProperties` -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- USAGE EXAMPLES -->
 
 <!-- ROADMAP -->
 
 ## Roadmap
 
 - [ ] README Updates/Documentation
-- [ ] Better Themeing Capabilities
+- [ ] Better Theming Capabilities
 - [ ] Additional Components
 
 See the [open issues](https://github.com/Forge4Flow/FlowComponents/issues) for a full list of proposed features (and known issues).
@@ -325,7 +364,6 @@ Our library owes its existence to several key influences and resources in the op
 - **Utilized Open Source Libraries**: We built our components on top of various open source libraries. These include:
   - [SyntaxHighlight](https://github.com/Forge4Flow/SyntaxHighlight.git)
   - [SwiftUI Cached Async Image](https://github.com/lorenzofiamingo/swiftui-cached-async-image)
-  - [FCL-Swift](https://github.com/outblock/fcl-swift)
 
 This section is an opportunity to show gratitude to those who have indirectly helped shape this project. We invite you to explore these resources and acknowledge their contributions to the open source community.
 
