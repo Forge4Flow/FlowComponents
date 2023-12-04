@@ -9,17 +9,19 @@ import SwiftUI
 import SyntaxHighlight
 
 public struct CodeBlock: View {
+    @Environment(FlowManager.self) private var flowManager
+    
     @State private var title: String
     @State private var code: String
     @State private var grammar: GrammarTypes
-    @State private var theme: Themes
+    @State private var theme: Themes?
     
     public init(cadenceCode: CadenceCode) {
         self.init(title: cadenceCode.fileName, code: cadenceCode.code, grammar: .cadence)
     }
     
     public init(code: String, grammar: GrammarTypes) {
-        self.init(title: grammar.name, code: code, grammer: grammar, theme: flowManager.themeConfig.textMateTheme)
+        self.init(title: grammar.name, code: code, grammer: grammar, theme: nil)
     }
     
     public init(code: String, grammar: GrammarTypes, theme: Themes) {
@@ -27,10 +29,10 @@ public struct CodeBlock: View {
     }
     
     public init(title: String, code: String, grammar: GrammarTypes) {
-        self.init(title: title, code: code, grammer: grammar, theme: flowManager.themeConfig.textMateTheme)
+        self.init(title: title, code: code, grammer: grammar, theme: nil)
     }
     
-    public init(title: String, code: String, grammer: GrammarTypes, theme: Themes) {
+    public init(title: String, code: String, grammer: GrammarTypes, theme: Themes?) {
         self.title = title
         self.code = code
         self.grammar = grammer
@@ -39,7 +41,7 @@ public struct CodeBlock: View {
     
     public var body: some View {
         GroupBox {
-            SyntaxText(code: code, theme: theme, grammar: grammar)
+            SyntaxText(code: code, theme: (theme != nil) ? theme! : flowManager.themeConfig.textMateTheme, grammar: grammar)
         } label: {
             Text(title)
         }

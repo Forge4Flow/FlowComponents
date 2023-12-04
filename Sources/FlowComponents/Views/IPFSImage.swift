@@ -9,6 +9,7 @@ import SwiftUI
 import CachedAsyncImage
 
 public struct IPFSImage: View {
+    @Environment(FlowManager.self) private var flowManager
     @State private var cid: String
     
     public init(cid: String) {

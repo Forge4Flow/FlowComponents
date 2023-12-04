@@ -7,28 +7,20 @@
 
 
 import SwiftUI
+import Observation
 import Flow
 
 public struct TransactionView: View {
-    @Environment(\.presentationMode)
-    var presentationMode
-    
-    public init() {}
-    
     public var body: some View {
         ProgressView()
             .progressViewStyle(LargeFlowTransactionView())
-            .onReceive(flowManager.$pendingTx) { tx in
-                if tx == nil {
-                    presentationMode.wrappedValue.dismiss()
-                }
-            }
     }
 }
 
 struct LargeFlowTransactionView: ProgressViewStyle {
     @Environment(\.colorScheme) var colorScheme
-    @State private var txStatusString: String = "Pending"
+    @Environment(FlowManager.self) private var flowManager
+    @State private var txStatusString: String = "Submitted"
     
     func makeBody(configuration: Configuration) -> some View {
         VStack(spacing: 10) {
@@ -55,26 +47,31 @@ struct LargeFlowTransactionView: ProgressViewStyle {
         .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .continuous))
         .frame(width: 325)
         .shadow(color: flowManager.themeConfig.primaryColor.opacity(0.8), radius: 10)
-        .onReceive(flowManager.$pendingTxStatus, perform: { value in
-            switch value {
-            case .unknown:
-                txStatusString = "Submitted"
-            case .pending:
-                txStatusString = "Pending"
-            case .executed:
-                txStatusString = "Executed"
-            case .sealed:
-                txStatusString = "Sealed"
-            case .expired:
-                txStatusString = "Expired"
-            case .finalized:
-                txStatusString = "Finalized"
+        .onAppear() {
+            withObservationTracking {
+                _ = flowManager.pendingTxStatus
+            } onChange: {
+                switch flowManager.pendingTxStatus {
+                case .unknown:
+                    txStatusString = "Submitted"
+                case .pending:
+                    txStatusString = "Pending"
+                case .executed:
+                    txStatusString = "Executed"
+                case .sealed:
+                    txStatusString = "Sealed"
+                case .expired:
+                    txStatusString = "Expired"
+                case .finalized:
+                    txStatusString = "Finalized"
+                }
             }
-        })
+        }
     }
 }
 
 struct LargeFlowCircleView: View {
+    @Environment(FlowManager.self) private var flowManager
     @State private var isLoading = false
     
     var body: some View {

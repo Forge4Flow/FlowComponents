@@ -19,15 +19,6 @@
       }
     },
     {
-      "identity" : "fcl-swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/outblock/fcl-swift.git",
-      "state" : {
-        "revision" : "c3d81cd339196988e7bd670b4c359c041a81f24d",
-        "version" : "0.1.2"
-      }
-    },
-    {
       "identity" : "finejson",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/omochi/FineJSON",

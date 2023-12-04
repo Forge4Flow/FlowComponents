@@ -9,12 +9,10 @@ import SwiftUI
 import SyntaxHighlight
 
 public struct ErrorView: View {
-    @State private var error: String
+    @Environment(FlowManager.self) private var flowManager
     @State private var highlighter: Highlighter?
     
-    public init(error: String) {
-        self.error = error
-    }
+    public init() {}
     
     public var body: some View {
         VStack {
@@ -43,7 +41,7 @@ public struct ErrorView: View {
                     .background(highlighter.theme.backgroundColor.opacity(0.8))
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             } else {
-                Text(error)
+                Text(flowManager.txError ?? "Problem Loading Error Text")
             }
         }
     }
@@ -54,7 +52,7 @@ public struct ErrorView: View {
                 let downloadedTheme = try await Theme(contentsOf: Themes.solarizedDark.url)
                 let downloadedGrammar = try await Grammar(url: GrammarTypes.cadence.url)
 
-                self.highlighter = Highlighter(string: error, theme: downloadedTheme, grammar: downloadedGrammar)
+                self.highlighter = Highlighter(string: flowManager.txError ?? "Problem Loading Error Text", theme: downloadedTheme, grammar: downloadedGrammar)
             } catch {
                 // Handle errors
                 print("Error loading syntax highlighter: \(error)")

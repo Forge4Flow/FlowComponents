@@ -8,6 +8,8 @@
 import SwiftUI
 
 public struct LargeButton: ViewModifier {
+    @Environment(FlowManager.self) private var flowManager
+    
     public func body(content: Content) -> some View {
         content
             .frame(maxWidth: .infinity, maxHeight: 40)
@@ -24,6 +26,8 @@ public extension Button {
 }
 
 public struct ButtonView: View {
+    @Environment(FlowManager.self) private var flowManager
+    
     private var labelContent: LabelContent
     private var action: () -> Void
 

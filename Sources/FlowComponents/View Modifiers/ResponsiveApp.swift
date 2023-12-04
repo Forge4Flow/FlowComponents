@@ -5,23 +5,9 @@
 //  Created by BoiseITGuru on 11/24/23.
 //
 
+import FCL
+import Combine
 import SwiftUI
-
-public class AppProperties: Observable, ObservableObject {
-    @Published public var isLandscape: Bool
-    @Published public var isiPad: Bool
-    @Published public var isSplit: Bool
-    @Published public var isMaxSplit: Bool
-    @Published public var size: CGSize
-    
-    public init(isLandscape: Bool, isiPad: Bool, isSplit: Bool, isMaxSplit: Bool, size: CGSize) {
-        self.isLandscape = isLandscape
-        self.isiPad = isiPad
-        self.isSplit = isSplit
-        self.isMaxSplit = isMaxSplit
-        self.size = size
-    }
-}
 
 public struct ResponsiveApp: ViewModifier { 
     public func body(content: Content) -> some View {
