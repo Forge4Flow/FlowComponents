@@ -13,7 +13,7 @@ N/A
 
 ### Changed
 
-- README Updates
+N/A
 
 ### Deprecated
 
@@ -30,6 +30,20 @@ N/A
 ### Security
 
 N/A
+
+## [v0.3.1]
+
+### Added
+
+- Workflow to stop local depeendcy paths from making it into releases
+
+### Changed
+
+- README Updates
+
+### Fixed
+
+- Dependency paths
 
 ## [v0.3.0] - 12/3/2023
 
