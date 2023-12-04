@@ -42,4 +42,11 @@ public struct FlowApp<Content: View>: View {
             .environment(flowManager)
         }
     }
+    
+    // MARK: Simple Way to Find if the app is in Split View
+    private func isSplit() -> Bool {
+        guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return false }
+
+        return screen.windows.first?.frame.size != screen.screen.bounds.size
+    }
 }
