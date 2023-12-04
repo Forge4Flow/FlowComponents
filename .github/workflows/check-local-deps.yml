@@ -1,0 +1,24 @@
+name: Check For Local Dependency Paths
+
+on:
+  pull_request:
+
+jobs:
+  check-local-deps:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Swift
+        uses: tgymnich/setup-swift@v1
+        with:
+          version: "5.9"
+
+      - name: Run Dependency Check
+        run: |
+          set -e
+
+          # Use Swift script to check for local paths in dependencies
+          swift check-deps.swift
